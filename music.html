@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">ALBUM NATURE</h2>
+            <h3 id="artist">A.K.Raj</h3>
+            <div class="img_container">
+                <img src="image/Album Nature.jpg" alt="">
+            </div>
+            <audio src="music/iPhone.mp3"></audio>
+            <!------controls -->
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-play main_button" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const next = document.getElementById("next");
+        const prev = document.getElementById("prev");
+
+        const songs = [{
+            name:"Album Nature",
+            title:"iphone",
+            artist:"A.K.Raj",
+        },{
+            name:"Album Forest",
+            title:"Flute",
+            artist:"R.Kumar",
+        },{
+            name:"Album Sky",
+            title:"Voilin",
+            artist:"V.I. Anand",
+        }]
+
+
+        let isPlaying = false;
+        // for play function 
+        const playMusic =  () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+        // for pause function 
+        
+        const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', () =>{
+            isPlaying ? pauseMusic() : playMusic();
+        })
+
+        // changing track previous and next
+
+        const loadsong = (songs) =>{
+            title.textContent=songs.title;
+            artist.textContent=songs.artist;
+            music.src = "music/" + songs.title + ".mp3";
+            img.src = "image/" + songs.name + ".jpg";
+        };
+        songsIndex = 0;
+
+        // loadsong(songs[0]);
+
+        const nextSong = ()=>{
+            // songsIndex++;
+            songsIndex = (songsIndex + 1) % songs.length;
+            loadsong(songs[songsIndex]);
+            playMusic();
+        }
+        const prevSong = ()=>{
+            // songsIndex++;
+            songsIndex = (songsIndex - 1 + songs.length)% songs.length;
+            loadsong(songs[songsIndex]);
+            playMusic();
+        }
+
+        next.addEventListener('click',nextSong);
+        prev.addEventListener('click',prevSong);
+
+
+    </script>
+</body>
+</html>
